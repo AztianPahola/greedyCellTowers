@@ -62,5 +62,5 @@ Greedy Approach:
 Number of cell towers Required: 1  
 Placed at mile markers: 10 
 
-As is shown, not only does the greedy approach avoid building towers where there are no houses, it also minimizes the amount of towers built by choosing the mile marker which would have the highest coverage if a cell tower is built there, avoiding cases of building two towers when one would suffice in this example.
+As is shown, not only does the greedy approach avoid building towers where there are no houses, it also minimizes the amount of towers built by choosing the mile marker which would have the highest coverage if a cell tower is built there, avoiding building two towers when one would suffice in this example.
 
