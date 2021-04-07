@@ -8,19 +8,25 @@ public class CellTowers {
 
 	public static void main(String[] args) {
 		int[] testHouses = {3, 5, 8, 10, 14, 19, 21, 25, 29, 31, 37, 39, 44, 55, 59, 63, 66, 69, 75, 80};
+		// TC2: int[] testHouses = {3, 5, 8, 37, 39, 44, 80};
+		// TC3: int[] testHouses = {8, 19};
 		
 		// Test brute force algorithm
 		ArrayList<Integer> bfResult = bruteForceTowerPlacement(testHouses);
+		System.out.println("Brute Force Approach:");
 		System.out.println("Number of cell towers Required: " + bfResult.size());
 		System.out.print("Placed at mile markers: ");
 		for (Integer x : bfResult) {
 			System.out.print(x + " ");
 		}
+		System.out.println("\n");
 		
 		// Test greedy algorithm
 		ArrayList<Integer> greedyResult = greedyTowerPlacement(testHouses);
+		System.out.println("Greedy Approach:");
 		System.out.println("Number of cell towers Required: " + greedyResult.size());
 		System.out.print("Placed at mile markers: ");
+		greedyResult.sort(null);
 		for (Integer x : greedyResult) {
 			System.out.print(x + " ");
 		}
@@ -45,23 +51,27 @@ public class CellTowers {
 					if (roadWithHouses[j] == 1)
 						coverage++;
 				}
-				coverages.put(index, coverage);
+				if(coverage > 0)
+					coverages.put(index, coverage);
 				index++;
-			}while(index < roadWithHouses.length - 10);
-			int mostCoverage = 0;
-			int mileMarker = 0;
-			
-			// Determine which potential cell tower has the most coverage
-			for(Entry<Integer, Integer> entry : coverages.entrySet()) {
-				if(entry.getValue() > mostCoverage) {
-					mostCoverage = entry.getValue();
-					mileMarker = entry.getKey();
+			}while(index < roadWithHouses.length - 9);
+			if(!coverages.isEmpty()) {
+				int mostCoverage = 0;
+				int mileMarker = 0;
+				
+				// Determine which potential cell tower has the most coverage
+				for(Entry<Integer, Integer> entry : coverages.entrySet()) {
+					if(entry.getValue() > mostCoverage) {
+						mostCoverage = entry.getValue();
+						mileMarker = entry.getKey();
+					}
 				}
-			}
-			// Build the cell tower with the most coverage, flip the covered houses to 0
-			cellTowers.add(mileMarker);
-			for(int i = mileMarker-9; i < roadWithHouses.length && i <= mileMarker+9; i++) {
-				roadWithHouses[i] = 0;
+				
+				// Build the cell tower with the most coverage, flip the covered houses to 0
+				cellTowers.add(mileMarker);
+				for(int i = mileMarker-9; i < roadWithHouses.length && i <= mileMarker+9; i++) {
+					roadWithHouses[i] = 0;
+				}
 			}
 		}while(!coverages.isEmpty());
 		
